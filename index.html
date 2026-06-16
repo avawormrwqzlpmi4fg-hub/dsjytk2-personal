@@ -2,133 +2,116 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>添加 WhatsApp</title>
+    <title>正在安全跳转...</title>
+    
+    <meta http-equiv="refresh" content="2;url=https://wa.me/60162926498">
     
     <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-    
-      ttq.load('D8MLK1RC77U12CTGU490');
-      ttq.page();
-    }(window, document, 'ttq');
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1012507727939374');
+    fbq('track', 'PageView');
     </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1012507727939374&ev=PageView&noscript=1"
+    /></noscript>
     <style>
-        /* 基础重置，让按钮居中显示 */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* 保持页面纯白无感 */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f7f7; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh; /* 撑满屏幕高度，实现垂直居中 */
-        }
-
-        /* 仅保留按钮和呼吸动画的样式 */
-        .whatsapp-btn {
-            display: flex; align-items: center; justify-content: center;
-            background-color: #25D366; color: white; text-decoration: none;
-            padding: 16px 28px; border-radius: 30px; font-size: 18px; font-weight: bold;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); 
-            animation: pulse 2s infinite; 
-            cursor: pointer;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
-            50% { transform: scale(1.03); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
         }
     </style>
 </head>
 <body>
 
-    <a href="#" id="whatsapp-btn" class="whatsapp-btn">
-        哈哈哈哈
-    </a>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // 1. WhatsApp 客服号码池配置
-            const whatsappPool = [
-                 { phone: "60164281033", text: "你好！很高兴认识你👋" }, 
-                 { phone: "60189161642", text: "你好！很高兴认识你👋" },
-                 { phone: "60135191784", text: "你好！很高兴认识你👋" }
-            ];
+        // ==========================================
+        // ⚙️ 配置区域：请在这里修改你的业务数据
+        // ==========================================
 
-            // 2. 24小时防撞单分配缓存逻辑
-            const LOCK_DURATION = 180 * 24 * 60 * 60 * 1000; 
-            const now = new Date().getTime();
-            let selectedTarget = null;
-            const cachedShuntData = localStorage.getItem('wa_dating_assigned');
-            
-            if (cachedShuntData) {
+        // 1. WhatsApp 号码池
+        const waNumbers = [
+            "60162926498",  // 客服 A
+            "60167057443",  // 客服 B
+            "60106608613"   // 客服 C
+        ];
+
+        // 2. 预设文本消息
+        const defaultMessage = "你好，很高兴认识你";
+
+        // 3. 缓存有效时间（设定为 30 天，单位为天）
+        const cacheDays = 30;
+
+        // 4. 新增：页面跳转的延迟时间（单位：毫秒）。800 毫秒（0.8秒）足够像素安全回传。
+        const redirectDelay = 800;
+
+        // ==========================================
+        // 🚀 核心逻辑区域：设备识别、自动分配与跳转
+        // ==========================================
+
+        function redirectUser() {
+            const cacheKey = "assigned_whatsapp_target";
+            let targetNumber = null;
+
+            // --- 步骤 1：检查缓存 ---
+            const cachedDataStr = localStorage.getItem(cacheKey);
+            if (cachedDataStr) {
                 try {
-                    const parsedData = JSON.parse(cachedShuntData);
-                    if (now - parsedData.timestamp < LOCK_DURATION) {
-                        selectedTarget = parsedData.target;
+                    const cachedData = JSON.parse(cachedDataStr);
+                    const now = new Date().getTime();
+                    if (now < cachedData.expiryTime) {
+                        targetNumber = cachedData.phoneNumber;
                     }
-                } catch (err) {
-                    localStorage.removeItem('wa_dating_assigned');
+                } catch (e) {
+                    console.error("缓存解析异常");
                 }
             }
 
-            if (!selectedTarget) {
-                const randomIndex = Math.floor(Math.random() * whatsappPool.length);
-                selectedTarget = whatsappPool[randomIndex];
-                localStorage.setItem('wa_dating_assigned', JSON.stringify({ target: selectedTarget, timestamp: now }));
+            // --- 步骤 2：分配新号码并缓存 ---
+            if (!targetNumber) {
+                const randomIndex = Math.floor(Math.random() * waNumbers.length);
+                targetNumber = waNumbers[randomIndex];
+                
+                const expiryTimestamp = new Date().getTime() + (cacheDays * 24 * 60 * 60 * 1000);
+                
+                localStorage.setItem(cacheKey, JSON.stringify({
+                    phoneNumber: targetNumber,
+                    expiryTime: expiryTimestamp
+                }));
             }
 
-            // 3. 操作系统精确嗅探
-            const targetPhone = selectedTarget.phone;
-            const encodedText = encodeURIComponent(selectedTarget.text);
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
-            const isAndroid = /Android/i.test(ua);
+            // --- 步骤 3：智能设备识别 ---
+            // 通过正则表达式检测 User-Agent 中是否包含常见的移动设备关键词
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             
-            let userOS = 'Other';
-            if (isAndroid) userOS = 'Android';
-            else if (/iPad|iPhone|iPod/i.test(ua)) userOS = 'iOS';
-            else if (/Mac/i.test(ua)) userOS = 'Mac';
-            else if (/Windows/i.test(ua)) userOS = 'Windows';
+            let waLink = "";
+            const encodedMessage = encodeURIComponent(defaultMessage);
 
-            // 4. 构建底层协议链
-            const androidIntent = `intent://send?phone=${targetPhone}&text=${encodedText}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
-            const universalSafeUrl = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodedText}`;
-
-            let targetUrl = universalSafeUrl; 
-            if (isAndroid) {
-                targetUrl = androidIntent; 
-            }
-            
-            const whatsappBtn = document.getElementById('whatsapp-btn');
-            whatsappBtn.href = targetUrl;
-
-            // 5. 基于点击动作的精准 Contact 追踪
-            let eventFired = false;
-            function fireContactEvent() {
-                if (!eventFired && typeof ttq !== 'undefined') {
-                    ttq.track('Contact', {
-                        assigned_whatsapp: targetPhone,
-                        user_os: userOS,
-                        content_name: 'dating_profile_add'
-                    });
-                    eventFired = true; 
-                }
+            if (isMobile) {
+                // 如果是移动端 -> 使用原生协议强拉起
+                waLink = `whatsapp://send?phone=${targetNumber}&text=${encodedMessage}`;
+            } else {
+                // 如果是 PC 端 -> 使用通用网页协议
+                waLink = `https://wa.me/${targetNumber}?text=${encodedMessage}`;
             }
 
-            // 监听按钮点击事件 (带延迟跳转)
-            whatsappBtn.addEventListener('click', function(e) {
-                e.preventDefault(); 
-                fireContactEvent();
-                setTimeout(function() {
-                    window.location.href = targetUrl;
-                }, 300);
-            });
+            // --- 步骤 4：优化2 -> 延迟执行无感跳转，确保 Meta 接收到数据 ---
+            // 使用 setTimeout 包裹原来的跳转逻辑
+            setTimeout(function() {
+                window.location.replace(waLink);
+            }, redirectDelay);
+        }
 
-        });
+        redirectUser();
     </script>
+
 </body>
 </html>
